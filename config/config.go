@@ -14,6 +14,11 @@ type Config struct {
 	Version 	string
 }
 
+type JWTConfig struct {
+	Secret 		string
+	Iss			string
+}
+
 func LoadConfig() *Config {
 	cfg := &Config{
 		ServerPort: getEnv("SERVER_PORT", ":8000"),
@@ -44,4 +49,13 @@ func GetDBConnection() (*sql.DB, error) {
 	}
 
 	return db, nil
+}
+
+func GetJWTConfig() *JWTConfig {
+	cfg := &JWTConfig{
+		Secret: getEnv("JWT_SECRET", ""),
+		Iss: 	getEnv("JWT_ISS", "localhost.com"),
+	}
+	
+	return cfg
 }

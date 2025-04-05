@@ -10,9 +10,9 @@ import (
 
 
 func main() {
-	godotenv.Load();
+	godotenv.Load()
 	r := gin.Default()
-	apiConfig := config.LoadConfig();
+	apiConfig := config.LoadConfig()
 	db, err := config.GetDBConnection()
 	if (err != nil) {
 		log.Fatal(err)
@@ -20,5 +20,7 @@ func main() {
 
 	routes.SetupRoutes(r, apiConfig, db)
 
-	r.Run(apiConfig.ServerPort)
+	if err := r.Run(apiConfig.ServerPort); err != nil {
+		log.Fatal(err)
+	}
 }
